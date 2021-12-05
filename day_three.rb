@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 
 class DayThree
   attr_accessor :oxy, :array
@@ -9,23 +9,39 @@ class DayThree
     @oxy ||= []
   end
 
-  def map_string_to_columns
-    @string.each_line do |line|
-      @array << [line.chars.reject { |char| char == "\n" }.map(&:to_i)].flatten
+  def map_string_to_columns(string, array)
+    string.each_line do |line|
+      array << [line.chars.reject { |char| char == "\n" }.map(&:to_i)].flatten
     end
   end
 
-  # string_sm =
+  # o2 = [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0].join.to_i(2) = 508
+  # co2 = [0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0].join.to_i(2) = 1076
   # two = DayThree.new(string_me)
   # two.map_string_to_columns
   # load './day_three.rb'
   # array = two.array
-  # 10111
+  # array = [ [1,0,1,1,0], [1,0,1,1,1], [1,1,1,0,0],[0,0,1,0,0] ]
+  # array.max_by { |i| row.count(i) }
+
   def oxygen_keep(index, array)
-    index ||= 0
+    p index ||= 0
     # binding.pry
     array
+      .sort
       .keep_if { |set| set[index] == (array.transpose.map { |row| row.max_by { |i| row.count(i) } }[index]) }
+      .map do |set|
+      index += 1
+      [set] | oxygen_keep(index, array)
+    end
+  end
+
+  def co2_keep(index, array)
+    p index ||= 0
+    # binding.pry
+    array
+      .sort
+      .keep_if { |set| set[index] == (array.transpose.map { |row| row.min_by { |i| row.count(i) } }[index]) }
       .map do |set|
       index += 1
       [set] | oxygen_keep(index, array)
