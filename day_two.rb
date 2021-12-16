@@ -1,20 +1,23 @@
 class DayTwo
   def initialize(string)
-    @string ||= string
-    @forward ||= 0
-    @depth ||= 0
+    @string = string
+    @forward = 0
+    @depth = 0
+    @aim = 0
   end
 
   def map_string
     @string.each_line do |line|
-      sub_input = line.split(' ')
-      case sub_input[0]
+      command, x = line.split(' ')
+
+      case command
       when 'forward'
-        @forward += sub_input[1].to_i
+        @forward += x.to_i
+        @depth += @aim * x.to_i
       when 'up'
-        @depth -= sub_input[1].to_i
+        @aim -= x.to_i
       when 'down'
-        @depth += sub_input[1].to_i
+        @aim += x.to_i
       else
         raise 'that sux man'
       end

@@ -24,8 +24,21 @@ class DayThree
   # array = [ [1,0,1,1,0], [1,0,1,1,1], [1,1,1,0,0],[0,0,1,0,0] ]
   # array.max_by { |i| row.count(i) }
 
+  RESULTS = {
+    'Allegoric Alaskans' => { 'MP' => 0,
+                              'W' => 0,
+                              'D' => 0,
+                              'L' => 0,
+                              'P' => 0 },
+    'Allegoric Alaskans' => { 'MP' => 0,
+                              'W' => 0,
+                              'D' => 0,
+                              'L' => 0,
+                              'P' => 0 }
+  }
+
   def oxygen_keep(index, array)
-    p index ||= 0
+    index ||= 0
     # binding.pry
     array
       .sort
@@ -64,12 +77,4 @@ class DayThree
     map_string_to_columns
     puts gamma_rate.join.to_i(2) * epsilon_rate.join.to_i(2)
   end
-
-  # def comments_for(parent_id, comments)
-  #   comments
-  #     .filter { |comment| comment[:parent_id] == parent_id }
-  #     .map do |comment|
-  #       [comment] | comments_for(comment[:id], comments)
-  #     end
-  # end
 end
